@@ -136,6 +136,95 @@ This is useful to help modern promise middleware support koa 0.x or 1.x.
 legacyMiddleware = convert.back(modernMiddleware)
 ```
 
+#### `convert.mount()`
+
+* Use [koa-mount](https://github.com/koajs/mount) with koa@2
+
+### Mounting Applications
+
+  Entire applications mounted at specific paths. For example you could mount
+  a blog application at "/blog", with a router that matches paths such as
+  "GET /", "GET /posts", and will behave properly for "GET /blog/posts" etc
+  when mounted.
+
+```js
+const mount = require('koa-mount')
+const Koa = require('koa')
+
+// hello
+
+const a = new Koa()
+
+a.use(function (ctx, next) {
+  return next().then(() => {
+    ctx.body = 'Hello'
+  })
+})
+
+// world
+
+const b = new Koa()
+
+b.use(function (ctx, next) {
+  return next().then(() => {
+    ctx.body = 'World'
+  })
+})
+
+// app
+
+const app = new Koa()
+
+app.use(mount('/hello', a))
+app.use(mount('/world', b))
+
+app.listen(3000)
+console.log('listening on port 3000')
+```
+
+  Try the following requests:
+
+```
+$ GET /
+Not Found
+
+$ GET /hello
+Hello
+
+$ GET /world
+World
+```
+
+* Mounting Middleware
+
+  Mount middleware at specific paths, allowing them to operate independently
+  of the prefix, as they're not aware of it.
+
+```js
+const mount = require('koa-convert').mount
+const Koa = require('koa')
+
+function hello(ctx, next) {
+  return next().then(() => {
+    ctx.body = 'Hello'
+  })
+}
+
+function world(ctx, next) {
+  return next().then(() => {
+    ctx.body = 'World'
+  })
+}
+
+const app = new Koa()
+
+app.use(mount('/hello', hello))
+app.use(mount('/world', world))
+
+app.listen(3000)
+console.log('listening on port 3000')
+```
+
 ## License
 
 MIT
