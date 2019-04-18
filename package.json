@@ -23,10 +23,10 @@
   "homepage": "https://github.com/gyson/koa-convert#readme",
   "dependencies": {
     "co": "^4.6.0",
-    "koa-compose": "^3.0.0"
+    "koa-compose": "^4.1.0"
   },
   "devDependencies": {
-    "koa": "^2.0.0-alpha.2",
+    "koa": "^2.7.0",
     "koa-v1": "^1.0.0",
     "mocha": "^2.3.3",
     "standard": "^5.3.1",
