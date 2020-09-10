@@ -163,4 +163,4 @@ legacyMiddleware = convert.back(modernMiddleware)
 
 ## License
 
-MIT
+[MIT](LICENSE)
